@@ -7,6 +7,7 @@ using CourierService.PresentationLayer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CourierService.Models.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace CourierService
 {
@@ -15,8 +16,8 @@ namespace CourierService
         static List<IOffer> Offers;
 
         public static void Main(string[] args)
-        {           
-            var services = new ServiceCollection()
+        {
+            var services = new ServiceCollection()            
             .AddTransient<IDeliveryManager, DeliveryManager>()
             .AddTransient<IPackageManager, PackageManager>()
             .AddTransient<IDeliveryTimeManager, DeliveryTimeManager>();
@@ -28,14 +29,17 @@ namespace CourierService
 
 
             //First Challenge
+
             SetOffers();
             IClient client1 = new Client1(Offers, packageManager);
             client1.Start();
 
+
             //Second Challenge implimented with out modifing existing implimentation
-            SetOffers();
-            IClient client2 = new Client2(Offers, packageManager, deliveryTimeManager);
-            client2.Start();
+
+            //SetOffers();
+            //IClient client2 = new Client2(Offers, packageManager, deliveryTimeManager);
+            //client2.Start();
 
         }
 

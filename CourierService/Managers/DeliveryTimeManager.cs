@@ -20,37 +20,34 @@ namespace CourierService.Managers
             List<OutputPackageWithDeliveryTime> outputPackageWithDeliveryTimes
             )
         {
-            try
-            {                                
-                if (inputPackagesWithDeliveryTime.Count >= 1)
-                {                                                           
-                    for (int i = 0; i < noOfVehicles; i++)
+                                        
+            if (inputPackagesWithDeliveryTime.Count >= 1)
+            {                                                           
+                for (int i = 0; i < noOfVehicles; i++)
+                {
+                    vehicles[i].InputPackagesWithDeliveryTime = sum_up_recursive(inputPackagesWithDeliveryTime, vehicles[i].MaxWeight, new List<InputPackageWithDeliveryTime>());
+                    foreach (InputPackageWithDeliveryTime inputPackageWithDeliveryTime in vehicles[i].InputPackagesWithDeliveryTime)
                     {
-                        vehicles[i].InputPackagesWithDeliveryTime = sum_up_recursive(inputPackagesWithDeliveryTime, vehicles[i].MaxWeight, new List<InputPackageWithDeliveryTime>());
-                        foreach (InputPackageWithDeliveryTime inputPackageWithDeliveryTime in vehicles[i].InputPackagesWithDeliveryTime)
-                        {                            
-                            outputPackageWithDeliveryTimes.Where(s => s.ID == inputPackageWithDeliveryTime.ID).FirstOrDefault().DeliveryTime = inputPackageWithDeliveryTime.Distance / vehicles[i].MaxSpeed;
-                            decimal tempMaxDeliveryTime = vehicles[i].InputPackagesWithDeliveryTime.Max(s => s.DeliveryTIme);
-                            vehicles[i].NextAvailability = 2 * tempMaxDeliveryTime;
-                            inputPackagesWithDeliveryTime.Remove(inputPackageWithDeliveryTime);                            
-                        }
+                        decimal tempDeliveryTime = inputPackageWithDeliveryTime.Distance / vehicles[i].MaxSpeed;
+                        outputPackageWithDeliveryTimes.Where(s => s.ID == inputPackageWithDeliveryTime.ID).FirstOrDefault().DeliveryTime = tempDeliveryTime;
+                        vehicles[i].InputPackagesWithDeliveryTime.Where(s => s.ID == inputPackageWithDeliveryTime.ID).FirstOrDefault().DeliveryTIme = tempDeliveryTime;
+                        decimal tempMaxDeliveryTime = vehicles[i].InputPackagesWithDeliveryTime.Max(s => s.DeliveryTIme);
+                        vehicles[i].NextAvailability = 2 * tempMaxDeliveryTime;
 
-                        if (inputPackagesWithDeliveryTime.Count <= 0)
-                        {
-                            break;
-                        }
-                        else 
-                        {
-                            i = vehicles.OrderByDescending(s => s.NextAvailability).FirstOrDefault().ID - 1;
-                        }                        
+                        inputPackagesWithDeliveryTime.Remove(inputPackageWithDeliveryTime);                            
                     }
-                }
-                
-            }
-            catch (Exception ex)
-            {
 
+                    if (inputPackagesWithDeliveryTime.Count <= 0)
+                    {
+                        break;
+                    }
+                    else 
+                    {
+                        i = vehicles.OrderByDescending(s => s.NextAvailability).FirstOrDefault().ID - 1;
+                    }                        
+                }
             }
+                           
             return outputPackageWithDeliveryTimes;
         }        
 
@@ -72,12 +69,13 @@ namespace CourierService.Managers
                 InputPackageWithDeliveryTime n = numbers[i];
                 for (int j = i + 1; j < numbers.Count; j++) remaining.Add(numbers[j]);
 
-                List<InputPackageWithDeliveryTime> partial_rec = new List<InputPackageWithDeliveryTime>(partial);
-                partial_rec.Add(n);
+                //List<InputPackageWithDeliveryTime> partial_rec = new List<InputPackageWithDeliveryTime>(partial);
+                //partial_rec.Add(n);
+                partial.Add(n);
 
                 if (numbers.Count > 1)
                 {
-                    sum_up_recursive(remaining, target, partial_rec);
+                    sum_up_recursive(remaining, target, partial);
                 }
             }
 
