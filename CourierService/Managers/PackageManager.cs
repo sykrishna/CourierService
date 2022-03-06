@@ -25,7 +25,11 @@ namespace CourierService.Managers
                 decimal tempDeliveryCost;
                     
                 tempDeliveryCost = _deliveryManager.GetDeliveryCost(baseDeliveryCost, inputPackage);
-                outputPackage.Discount = offers.Where(s => s.ID == inputPackage.OfferCode).FirstOrDefault().GetDiscountAmount(tempDeliveryCost, inputPackage);
+                
+                if (offers.Any(s => s.ID == inputPackage.OfferCode))
+                {
+                    outputPackage.Discount = offers.Where(s => s.ID == inputPackage.OfferCode).FirstOrDefault().GetDiscountAmount(tempDeliveryCost, inputPackage);
+                }
 
                 outputPackage.TotalCost = tempDeliveryCost - outputPackage.Discount;
                 outputPackages.Add(outputPackage);

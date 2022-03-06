@@ -161,7 +161,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\InputPackage.cs" />
-    <Compile Include="PresentationLayer\ClientUI.cs" />
+    <Compile Include="PresentationLayer\Client.cs" />
     <Compile Include="Managers\Offer.cs" />
     <Compile Include="Managers\OFR001.cs" />
     <Compile Include="Managers\DeliveryManager.cs" />
@@ -173,6 +173,15 @@
     <Compile Include="Managers\Interfaces\IDeliveryManager.cs" />
     <Compile Include="Managers\Interfaces\IOffer.cs" />
     <Compile Include="Managers\Interfaces\IPackageManager.cs" />
+    <Compile Include="PresentationLayer\IClient.cs" />
+    <Compile Include="PresentationLayer\Client1.cs" />
+    <Compile Include="PresentationLayer\Client2.cs" />
+    <Compile Include="PresentationLayer\IClientEnhancement.cs" />
+    <Compile Include="Managers\Interfaces\IDeliveryTimeManager.cs" />
+    <Compile Include="Managers\DeliveryTimeManager.cs" />
+    <Compile Include="Models\OutputPackageWithDeliveryTime.cs" />
+    <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\InputPackageWithDeliveryTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
