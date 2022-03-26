@@ -9,7 +9,7 @@
 
 ## Introduction
 
-CourierService is a c# console application which can caliculate the total delivery cost by applying discount offers and also caliculate the estimated delivery time for every package by maximizing no.of packages in every shipment.
+CourierService is a c# console application which can estimate the total delivery cost of each package with an offer code (if applicable). and also caliculate the estimated delivery time for every package by maximizing no.of packages in every shipment.
 
 ## Prerequisites
 
